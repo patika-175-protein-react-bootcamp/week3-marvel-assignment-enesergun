@@ -49,9 +49,7 @@ console.log(list);
             </div>
         </div>
         <div className="container">
-          
-          {
-            
+          {            
             list.length > 0 &&
             list?.map((item, index) => (
               
