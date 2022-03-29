@@ -49,16 +49,7 @@ console.log(list);
             </div>
         </div>
         <div className="container">
-          {/* <div className="character-rectangle">
-              <div className="top-line"></div>
-              <div className="character-image-wrap">
-                  <img className="character-image" src="assests/image 4.png" alt="" />
-              </div>
-              <div className="character-name">
-                  <p>Adam Warlock</p>
-              </div>
-          </div> */}
-
+          
           {
             
             list.length > 0 &&
