@@ -7,22 +7,36 @@ import image2 from './assests/image2.png'
 
 import axios from 'axios'
 
+// https://gateway.marvel.com/v1/public/characters?ts=1&apikey=89c5bb6f000ff89c6b3bfd1804a55184&hash=d8e15a485cc807f99e27672c604d81c5&limit=100&offset=0
+
 function App() {
 
   const [list, setList] = useState([]);
+  const [offset, setOffset] = useState(0);
 
   useEffect(() => {
     getData();
-  }, [])
+  }, [offset])
   
+const handlePrevButton = () => {
+  if (offset >= 20){
+    setOffset(offset - 20);
+    console.log("öncede");
+  }
+}
 
+const handleNextButton = () => {
+  setOffset(offset + 20);
+  console.log("sonrada");
+}
 
 
 // request to marvel.api
   const getData = () => {
-    axios.get('https://gateway.marvel.com/v1/public/characters?ts=1&apikey=89c5bb6f000ff89c6b3bfd1804a55184&hash=d8e15a485cc807f99e27672c604d81c5')
+    axios.get(`https://gateway.marvel.com/v1/public/characters?ts=1&apikey=89c5bb6f000ff89c6b3bfd1804a55184&hash=d8e15a485cc807f99e27672c604d81c5&offset=${offset}`)
     .then(function (response) {
       // handle success
+      console.log(response.data.data.results);
       setList(response.data.data.results);
   })
     .catch(function (error) {
@@ -33,9 +47,6 @@ function App() {
     // always executed
   });
   }
-
-  
-console.log(list);
 
 
   return (
@@ -67,7 +78,7 @@ console.log(list);
 
         </div>
         <div className="pagination">
-            <div className="previous-page">
+            <div onClick={handlePrevButton} className="previous-page">
                 {"<"}
             </div>
             <div className="pages">
@@ -78,8 +89,8 @@ console.log(list);
                 <div className="next-active">101</div>
                 <div className="points">...</div>
                 <div className="last">200</div>
-            </div>
-            <div className="next-page">
+            </div>            
+            <div onClick={handleNextButton} className="next-page">
                 {">"}
             </div>
         </div>

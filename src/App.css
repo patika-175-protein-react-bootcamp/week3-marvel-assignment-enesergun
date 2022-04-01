@@ -95,6 +95,7 @@ body {
   text-align: center;
   font-size: 36px;
   padding: 10px;
+  cursor: pointer;
 }
 .pages {
   padding: 13px;
