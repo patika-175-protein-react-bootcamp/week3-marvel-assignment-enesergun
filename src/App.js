@@ -1,4 +1,5 @@
 import {useState, useEffect} from 'react'
+import Pagination from './components/Pagination';
 
 import './App.css';
 
@@ -14,13 +15,15 @@ function App() {
   const [list, setList] = useState([]);
   const [offset, setOffset] = useState(0);
 
+  
+
   useEffect(() => {
     getData();
   }, [offset])
   
 const handlePrevButton = () => {
   if (offset >= 20){
-    setOffset(offset - 20);
+    setOffset(offset - 20)  
     console.log("öncede");
   }
 }
@@ -30,6 +33,12 @@ const handleNextButton = () => {
   console.log("sonrada");
 }
 
+const handlePage = (page) => {
+  setOffset((page - 1) * 20);
+  console.log(page);
+}
+
+
 
 // request to marvel.api
   const getData = () => {
@@ -38,6 +47,7 @@ const handleNextButton = () => {
       // handle success
       console.log(response.data.data.results);
       setList(response.data.data.results);
+      localStorage.setItem('list', JSON.stringify(response.data.data.results));
   })
     .catch(function (error) {
       // handle error
@@ -82,13 +92,13 @@ const handleNextButton = () => {
                 {"<"}
             </div>
             <div className="pages">
-                <div className="first">1</div>
-                <div className="points">...</div>
-                <div className="previous-active">99</div>
-                <div className="active-page">100</div>
-                <div className="next-active">101</div>
-                <div className="points">...</div>
-                <div className="last">200</div>
+              {
+              //onClick={(e) => handlePage(e.target.textContent) 
+              }
+              
+                {/* <div className="points">...</div> */}
+                {/* <div className="last">200</div> */}
+                
             </div>            
             <div onClick={handleNextButton} className="next-page">
                 {">"}
