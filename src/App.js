@@ -20,7 +20,9 @@ function App() {
   useEffect(() => {
     getData(currentPage);
   }, [currentPage])
+
   
+/* HANDLE FUNCTIONS */  
 const handlePrevButton = () => {
   if (offset >= 20){
     setOffset(offset - 20);
@@ -41,36 +43,30 @@ const handleChangePage = (page) => {
   console.log("hangleChangePage", page);
 }
 
-
+/* THIS FUNC. IS CREAT PAGE NUMBERS IN PAGINATION */
 const getPaginationGroup = () => {
   let start = ((currentPage - 1) / 5) * 5;
-  
 
   let arr = new Array(3).fill().map((_, index) => {
     if (start === 78) {
       return "" 
     } 
     return start + index + 1
-
-
   });
 
   
-  
   if (start >= 4 && start < 73) {
-    
     return [1, "...", start - 1, start, ...arr, "...", pageCount]
+
   } else if (start < 4) {
-    
     return [1, 2, 3, 4, 5, "...", 78]
 
   } else if (start >= 73 && start <= 78) {
-    
     return [1, "...", pageCount- 5, pageCount- 4, pageCount-3, pageCount-2, pageCount-1, pageCount]
-/*     return [1, "...", ...arr, "...", pageCount] */
+
   } else {
-    
     return [...arr, "...", pageCount]
+
   }
 };
 
@@ -104,9 +100,9 @@ const getPaginationGroup = () => {
   }
 }
 
-console.log(currentPage);
 
   return (
+    /* HEADER START */
     <div className="main">
         <div className="header">
             <div className="header-background">
@@ -116,6 +112,9 @@ console.log(currentPage);
                 <img className="header-logo-img" src={image2} alt="" />
             </div>
         </div>
+        {/* HEADER END */}
+
+        {/* CONTENT START */}
         <div className="container">
           {            
             list.length > 0 &&
@@ -134,6 +133,9 @@ console.log(currentPage);
           }
 
         </div>
+          {/* CONTENT END */}
+
+        {/* PAGINATION START */}
         <div className="pagination">
             {
               currentPage === 1 
@@ -148,7 +150,7 @@ console.log(currentPage);
               { 
                 getPaginationGroup().map((page, index) => (
                   <div key={index} className="page-number">
-                    <div onClick={(e) => {handleChangePage(e.target.textContent); console.log("page", page); console.log("currentage", currentPage);}} className={`${currentPage  == page ? 'active-page' : null}`}>{page}</div>
+                    <div onClick={(e) => {handleChangePage(e.target.textContent) }} className={`${currentPage  == page ? 'active-page' : null}`}>{page}</div>
                   </div>
                 ))                
               }                            
@@ -164,6 +166,7 @@ console.log(currentPage);
               )
             }
         </div>
+        {/* PAGINATION END */}
     </div>
   );
 }
