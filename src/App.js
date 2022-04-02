@@ -1,5 +1,4 @@
 import {useState, useEffect} from 'react'
-import Pagination from './components/Pagination';
 
 import './App.css';
 
@@ -14,29 +13,41 @@ function App() {
 
   const [list, setList] = useState([]);
   const [offset, setOffset] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
 
   
-
   useEffect(() => {
     getData();
-  }, [offset])
+  }, [currentPage])
   
 const handlePrevButton = () => {
   if (offset >= 20){
-    setOffset(offset - 20)  
+    setOffset(offset - 20);
+    setCurrentPage(currentPage - 1); 
     console.log("öncede");
   }
 }
 
 const handleNextButton = () => {
   setOffset(offset + 20);
+  setCurrentPage(currentPage + 1);
   console.log("sonrada");
 }
 
-const handlePage = (page) => {
+const handleChangePage = (page) => {
   setOffset((page - 1) * 20);
-  console.log(page);
+  setCurrentPage(page);
 }
+
+const getPaginationGroup = () => {
+  let start = ((currentPage - 1) / 5) * 5;
+  let arr = new Array(5).fill().map((_, idx) => {
+    console.log("idx", idx);
+    return start + idx + 1
+  });
+  return arr
+};
+
 
 
 
@@ -45,7 +56,6 @@ const handlePage = (page) => {
     axios.get(`https://gateway.marvel.com/v1/public/characters?ts=1&apikey=89c5bb6f000ff89c6b3bfd1804a55184&hash=d8e15a485cc807f99e27672c604d81c5&offset=${offset}`)
     .then(function (response) {
       // handle success
-      console.log(response.data.data.results);
       setList(response.data.data.results);
       localStorage.setItem('list', JSON.stringify(response.data.data.results));
   })
@@ -93,7 +103,16 @@ const handlePage = (page) => {
             </div>
             <div className="pages">
               {
-              //onClick={(e) => handlePage(e.target.textContent) 
+              //onClick={(e) => handleChangePage(e.target.textContent) 
+              }
+
+              { 
+                getPaginationGroup().map((page, index) => (
+                  <div key={index} className="page-number">
+                    <p onClick={(e) => handleChangePage(e.target.textContent)}>{page}</p>
+                  </div>
+                ))
+                
               }
               
                 {/* <div className="points">...</div> */}
