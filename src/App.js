@@ -14,6 +14,7 @@ function App() {
   const [list, setList] = useState([]);
   const [offset, setOffset] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
+  const [pageCount, setPageCount] = useState()
 
   
   useEffect(() => {
@@ -39,17 +40,41 @@ const handleChangePage = (page) => {
   setCurrentPage(page);
 }
 
+const getPageCount = () => {
+
+}
+
 const getPaginationGroup = () => {
   let start = ((currentPage - 1) / 5) * 5;
-  let arr = new Array(5).fill().map((_, idx) => {
-    console.log("idx", idx);
-    return start + idx + 1
+  
+  
+  /* if (currentPage === 1) {
+    return `${currentPage}`
+  } */
+
+
+  let arr = new Array(5).fill().map((_, index) => {
+    if (start === 78) {
+      return 
+    }
+    return start + index + 1
+
+
   });
-  return arr
+
+
+  if (start > 4 && start < 73) {
+    return [1, "...", ...arr, "...", pageCount]
+  } else if (start >= 73 && start <= 78) {
+    return [1, "...",pageCount- 4, pageCount-3, pageCount-2, pageCount-1, pageCount]
+/*     return [1, "...", ...arr, "...", pageCount] */
+  } else {
+    return [...arr, "...", pageCount]
+  }
 };
 
 
-
+console.log(pageCount);
 
 // request to marvel.api
   const getData = () => {
@@ -58,6 +83,8 @@ const getPaginationGroup = () => {
       // handle success
       setList(response.data.data.results);
       localStorage.setItem('list', JSON.stringify(response.data.data.results));
+      console.log(response.data.data);
+      setPageCount(response.data.data.total / 20);
   })
     .catch(function (error) {
       // handle error
