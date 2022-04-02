@@ -25,30 +25,26 @@ const handlePrevButton = () => {
   if (offset >= 20){
     setOffset(offset - 20);
     setCurrentPage(currentPage - 1); 
-    console.log("öncede");
+    
   }
 }
 
 const handleNextButton = () => {
   setOffset(offset + 20);
   setCurrentPage(currentPage + 1);
-  console.log("sonrada");
+  
 }
 
 const handleChangePage = (page) => {
   setOffset((page - 1) * 20);
   setCurrentPage(page);
+  console.log("hangleChangePage", page);
 }
 
 
 const getPaginationGroup = () => {
   let start = ((currentPage - 1) / 5) * 5;
   
-  
-  /* if (currentPage === 1) {
-    return `${currentPage}`
-  } */
-
 
   let arr = new Array(3).fill().map((_, index) => {
     if (start === 78) {
@@ -59,23 +55,26 @@ const getPaginationGroup = () => {
 
   });
 
-  console.log(arr);
+  
   
   if (start >= 4 && start < 73) {
-    console.log("sayfa", start, "-2", start - 2, "-1", start - 1);
+    
     return [1, "...", start - 1, start, ...arr, "...", pageCount]
+  } else if (start < 4) {
+    
+    return [1, 2, 3, 4, 5, "...", 78]
+
   } else if (start >= 73 && start <= 78) {
-    console.log("sayfa", start);
+    
     return [1, "...", pageCount- 5, pageCount- 4, pageCount-3, pageCount-2, pageCount-1, pageCount]
 /*     return [1, "...", ...arr, "...", pageCount] */
   } else {
-    console.log("sayfa", start);
+    
     return [...arr, "...", pageCount]
   }
 };
 
 
-console.log(pageCount);
 
 // request to marvel.api
   const getData = (currentPage) => {
@@ -83,6 +82,8 @@ console.log(pageCount);
 
     if (characters) {
       setList(characters);
+      setPageCount(1560 / 20);
+      
     } else {
       axios.get(`https://gateway.marvel.com/v1/public/characters?ts=1&apikey=89c5bb6f000ff89c6b3bfd1804a55184&hash=d8e15a485cc807f99e27672c604d81c5&offset=${offset}`)
     .then(function (response) {
@@ -102,6 +103,7 @@ console.log(pageCount);
   }
 }
 
+console.log(currentPage);
 
   return (
     <div className="main">
@@ -136,22 +138,13 @@ console.log(pageCount);
                 {"<"}
             </div>
             <div className="pages">
-              {
-              //onClick={(e) => handleChangePage(e.target.textContent) 
-              }
-
               { 
                 getPaginationGroup().map((page, index) => (
                   <div key={index} className="page-number">
-                    <p onClick={(e) => handleChangePage(e.target.textContent)}>{page}</p>
+                    <div onClick={(e) => {handleChangePage(e.target.textContent); console.log("page", page); console.log("currentage", currentPage);}} className={`${currentPage  == page ? 'active-page' : null}`}>{page}</div>
                   </div>
-                ))
-                
-              }
-              
-                {/* <div className="points">...</div> */}
-                {/* <div className="last">200</div> */}
-                
+                ))                
+              }                            
             </div>            
             <div onClick={handleNextButton} className="next-page">
                 {">"}
