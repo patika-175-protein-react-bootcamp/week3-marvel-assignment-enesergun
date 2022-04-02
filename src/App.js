@@ -84,6 +84,7 @@ const getPaginationGroup = () => {
       setList(characters);
       setPageCount(1560 / 20);
       
+      
     } else {
       axios.get(`https://gateway.marvel.com/v1/public/characters?ts=1&apikey=89c5bb6f000ff89c6b3bfd1804a55184&hash=d8e15a485cc807f99e27672c604d81c5&offset=${offset}`)
     .then(function (response) {
@@ -134,9 +135,15 @@ console.log(currentPage);
 
         </div>
         <div className="pagination">
-            <div onClick={handlePrevButton} className="previous-page">
+            {
+              currentPage === 1 
+              ? <div></div> 
+              : (
+              <div onClick={handlePrevButton} className="previous-page">
                 {"<"}
-            </div>
+              </div>
+            )
+            }
             <div className="pages">
               { 
                 getPaginationGroup().map((page, index) => (
@@ -146,9 +153,16 @@ console.log(currentPage);
                 ))                
               }                            
             </div>            
-            <div onClick={handleNextButton} className="next-page">
-                {">"}
-            </div>
+            {
+              currentPage === 78 
+              ? <div></div>
+              : 
+              (
+                <div onClick={handleNextButton} className="next-page">
+                  {">"}
+                </div>
+              )
+            }
         </div>
     </div>
   );
