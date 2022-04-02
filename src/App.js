@@ -18,7 +18,7 @@ function App() {
 
   
   useEffect(() => {
-    getData();
+    getData(currentPage);
   }, [currentPage])
   
 const handlePrevButton = () => {
@@ -40,9 +40,6 @@ const handleChangePage = (page) => {
   setCurrentPage(page);
 }
 
-const getPageCount = () => {
-
-}
 
 const getPaginationGroup = () => {
   let start = ((currentPage - 1) / 5) * 5;
@@ -53,22 +50,26 @@ const getPaginationGroup = () => {
   } */
 
 
-  let arr = new Array(5).fill().map((_, index) => {
+  let arr = new Array(3).fill().map((_, index) => {
     if (start === 78) {
-      return 
-    }
+      return "" 
+    } 
     return start + index + 1
 
 
   });
 
-
-  if (start > 4 && start < 73) {
-    return [1, "...", ...arr, "...", pageCount]
+  console.log(arr);
+  
+  if (start >= 4 && start < 73) {
+    console.log("sayfa", start, "-2", start - 2, "-1", start - 1);
+    return [1, "...", start - 1, start, ...arr, "...", pageCount]
   } else if (start >= 73 && start <= 78) {
-    return [1, "...",pageCount- 4, pageCount-3, pageCount-2, pageCount-1, pageCount]
+    console.log("sayfa", start);
+    return [1, "...", pageCount- 5, pageCount- 4, pageCount-3, pageCount-2, pageCount-1, pageCount]
 /*     return [1, "...", ...arr, "...", pageCount] */
   } else {
+    console.log("sayfa", start);
     return [...arr, "...", pageCount]
   }
 };
@@ -77,14 +78,19 @@ const getPaginationGroup = () => {
 console.log(pageCount);
 
 // request to marvel.api
-  const getData = () => {
-    axios.get(`https://gateway.marvel.com/v1/public/characters?ts=1&apikey=89c5bb6f000ff89c6b3bfd1804a55184&hash=d8e15a485cc807f99e27672c604d81c5&offset=${offset}`)
+  const getData = (currentPage) => {
+    const characters = JSON.parse(localStorage.getItem(currentPage));
+
+    if (characters) {
+      setList(characters);
+    } else {
+      axios.get(`https://gateway.marvel.com/v1/public/characters?ts=1&apikey=89c5bb6f000ff89c6b3bfd1804a55184&hash=d8e15a485cc807f99e27672c604d81c5&offset=${offset}`)
     .then(function (response) {
       // handle success
+      localStorage.setItem(currentPage, JSON.stringify(response.data.data.results));
       setList(response.data.data.results);
-      localStorage.setItem('list', JSON.stringify(response.data.data.results));
-      console.log(response.data.data);
       setPageCount(response.data.data.total / 20);
+
   })
     .catch(function (error) {
       // handle error
@@ -94,6 +100,7 @@ console.log(pageCount);
     // always executed
   });
   }
+}
 
 
   return (
