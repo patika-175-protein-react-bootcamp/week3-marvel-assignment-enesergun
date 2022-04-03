@@ -100,7 +100,6 @@ const getPaginationGroup = () => {
   }
 }
 
-
   return (
     /* HEADER START */
     <div className="main">
@@ -138,7 +137,7 @@ const getPaginationGroup = () => {
         {/* PAGINATION START */}
         <div className="pagination">
             {
-              currentPage === 1 
+              currentPage == 1 
               ? <div></div> 
               : (
               <div onClick={handlePrevButton} className="previous-page">
@@ -156,7 +155,7 @@ const getPaginationGroup = () => {
               }                            
             </div>            
             {
-              currentPage === 78 
+              currentPage == 78 
               ? <div></div>
               : 
               (
