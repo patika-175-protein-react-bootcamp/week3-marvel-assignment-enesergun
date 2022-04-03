@@ -1,3 +1,9 @@
+# Ekran Görüntüsü
+
+![Demo](src\assests\final_6248b8049314450083153299_189845.gif)
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
