@@ -1,6 +1,8 @@
-# Ekran Görüntüsü
+# Ekran Görüntüsü ve Demo
 
-![Demo](https://media.giphy.com/media/cTPd9lYyo9PKIH9alE/giphy-downsized.gif)
+![Demo](https://protein-bootcamp-week3.vercel.app/)
+
+![Screenshot](https://media.giphy.com/media/cTPd9lYyo9PKIH9alE/giphy-downsized.gif)
 
 
 
