@@ -1,6 +1,6 @@
 # Ekran Görüntüsü
 
-![Demo](src\assests\final_6248b8049314450083153299_189845.gif)
+![Demo](https://media.giphy.com/media/cTPd9lYyo9PKIH9alE/giphy-downsized.gif)
 
 
 
